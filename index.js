@@ -3,29 +3,15 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 
-
-const MongoClient = require('mongodb').MongoClient;
-const uri = `mongodb+srv://newuser:newuser@cluster0.msj15.mongodb.net/ShoppingMall?retryWrites=true&w=majority`;
+// new user and password is newuser and newuser
+const { MongoClient } = require('mongodb');
+const { ObjectID } = require('mongodb');
+// const MongoClient = require('mongodb').MongoClient;
+const uri = `mongodb+srv://masumdb:passwordforatlas@cluster0.msj15.mongodb.net/ShoppingMall?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 app.use(express.json());
 app.use(cors());
-
-// const mongoose = require('mongoose');
-// const client = mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true});
-
-// const db = mongoose.connection;
-// db.on('error', console.error.bind(console, 'connection error:'));
-
-
-// db.once('open', function() {
-//   // we're connected!
-//   const all = client.db("ShoppingMall").collection("allProducts");
-//   app.get('/all', (req, res)=>{
-//         res.send('connected successfully')
-//       })
-// });
-
 
 
 client.connect(err => {
@@ -37,6 +23,18 @@ client.connect(err => {
       res.send(documents)
     })
   })
+
+  app.post('/add-product', (req, res)=>{
+    all.insertOne(req.body)
+    res.send('added')
+  })
+  
+
+  app.delete('/delete/:id',(req, res)=>{
+    all.deleteOne({_id:ObjectID(`${req.params.id}`)})
+  })
+
+
 });
 
 

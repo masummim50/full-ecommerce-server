@@ -19,10 +19,19 @@ client.connect(err => {
  const all = client.db("ShoppingMall").collection("allProducts");
   // perform actions on the collection object
   app.get('/allProducts', (req,res)=>{
-    all.find({}).toArray((err, documents)=>{
+    all.find().limit(20).toArray((err, documents)=>{
+      console.log(err)
       res.send(documents)
     })
   })
+
+  app.get('/allProducts/showing/:number', (req, res)=>{
+    let number = req.params.number;
+    all.find().limit(10).skip(parseInt(number)).toArray((err, documents)=>{
+      res.send(documents)
+    })
+  })
+
 
   app.post('/add-product', (req, res)=>{
     all.insertOne(req.body)

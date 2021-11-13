@@ -2,6 +2,7 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const path = require('path')
 
 // new user and password is newuser and newuser
 const { MongoClient } = require('mongodb');
@@ -49,6 +50,6 @@ client.connect(err => {
 
 
 app.get('/', (req, res)=>{
-  res.send('server running ')
+  res.sendFile(path.join(__dirname + '/main.html'))
 });
 app.listen(5000, ()=>console.log('successfully running'));

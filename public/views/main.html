@@ -1,0 +1,55 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../style.css">
+  <title>Document</title>
+</head>
+<body class="bg-gray-600 text-center text-white">
+  <p class="font-bold text-3xl">Api methods</p>
+  <div class="flex flex-col mt-2">
+    <div class="border rounded p-4 mb-2">
+      <p>Get all products</p>
+      <a id="allproducts" href="/allProducts" target='_blank' class="btn btn-light">https://localhost/5000/allproducts</a>
+      <button onclick="copyToClipboard('allproducts')" class="bg-green-600 text-white px-4 py-1 rounded focus:bg-green-800">Copy</button>
+    </div>
+
+    <div class="box border rounded p-4 mb-2">
+      <p>Get products by id</p>
+      <a id="pbyid" href="/product/60d0a74eba42280ac48d0e88" target='_blank' class="btn btn-light">https://localhost/5000/product/60d0a74eba42280ac48d0e88</a>
+      <button onclick="copyToClipboard('pbyid')" class="bg-green-600 text-white px-4 py-1 rounded focus:bg-green-800">Copy</button>
+    </div>
+
+    <div class="box border rounded p-4 mb-2">
+      <p>Get products by category</p>
+      <a id="bycategory" href="/category/laptop" target='_blank' class="btn btn-light">https://localhost/5000/category/laptop</a>
+      <button onclick="copyToClipboard('bycategory')" class="bg-green-600 text-white px-4 py-1 rounded focus:bg-green-800">Copy</button>
+    </div>
+
+    <div class="box border rounded p-4 mb-2">
+      <p>Get products by brand name</p>
+      <a id="bybrand" href="/seller/samsung" target='_blank' class="btn btn-light">https://localhost/5000/seller/samsung</a>
+      <button onclick="copyToClipboard('bybrand')" class="bg-green-600 text-white px-4 py-1 rounded focus:bg-green-800">Copy</button>
+    </div>
+
+    <div class="box border rounded p-4 mb-2">
+      <a href="/allproducts/showing/10" target='_blank' class="btn btn-light">get specific amount of product</a>(a bit complicated)<br/>
+      <p>Get the link from the address bar</p>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+  <script src="../views/main.js"></script>
+</body>
+</html>

@@ -4,7 +4,7 @@ const app = express();
 const cors = require('cors');
 const path = require('path')
 
-// new user and password is newuser and newuser
+
 const { MongoClient } = require('mongodb');
 const { ObjectID } = require('mongodb');
 // const MongoClient = require('mongodb').MongoClient;
@@ -73,6 +73,7 @@ client.connect(err => {
 
 
 app.get('/', (req, res)=>{
-  res.sendFile(path.join(__dirname + '/public/views/main.html'))
+  // res.sendFile(path.join(__dirname + '/public/views/main.html'))
+  res.send('server running')
 });
 app.listen(5000, ()=>console.log('successfully running'));

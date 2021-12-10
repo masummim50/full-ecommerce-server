@@ -73,7 +73,6 @@ client.connect(err => {
 
 
 app.get('/', (req, res)=>{
-  // res.sendFile(path.join(__dirname + '/public/views/main.html'))
-  res.send('server running')
+  res.sendFile(path.join(__dirname + '/public/views/main.html'))
 });
-app.listen(5000, ()=>console.log('successfully running'));
+app.listen(process.env.PORT || 5000, ()=>console.log('successfully running'));

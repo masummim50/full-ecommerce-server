@@ -18,55 +18,97 @@ app.use(express.static(path.join(__dirname, '/public')));
 
 client.connect(err => {
   // const collection = client.db("ShoppingMall").collection("allProducts");
- const all = client.db("ShoppingMall").collection("allProducts");
- const newcollection = client.db('ShoppingMall').collection('newcollection');
+ const collection = client.db("ShoppingMall").collection("allProducts");
+//  Don't need this newcollection for now
+//  const newcollection = client.db('ShoppingMall').collection('newcollection');
+
+
+  // middleware
+  const paginatedFunction = ()=> {
+    return (req, res)=> {
+      const result = {};
+      const property = req.query.property;
+      const value = req.query.value;
+      
+      let query = {}
+      query[property]= value;
+      let count;
+      // this function to get how many product is there of the same kind, then sets it into count variable to later use to show next or previous page
+      async function setCount() {
+        const number = await collection.find(query).count()
+        count = number;
+      }
+      setCount()
+      let page = parseFloat(req.query.page) || 1;
+      let limit= 10;
+      const startIndex = (page-1)*limit;
+      let endIndex = page * limit;
+      collection.find(query).limit(limit).skip((page-1)*limit).toArray((err, documents)=> {
+       
+        if(endIndex< count){
+          result.next = page +1;
+        }
+        if(startIndex> 0){
+          result.previous = page-1;
+        }
+        result.result = documents;
+        res.send(result)
+      })
+    }
+  };
+
  
   // perform actions on the collection object
   app.get('/allProducts', (req,res)=>{
-    all.find().limit(20).toArray((err, documents)=>{
+    collection.find().toArray((err, documents)=>{
       res.send(documents)
     })
   })
-
-  app.get('/product/:id', (req, res)=> {
-    let id = req.params.id;
-    all.find({_id:ObjectID(`${id}`)}).toArray((err, documents)=> {
-      res.send(documents[0])
-    })
-  })
-
-  app.get('/category/:categoryType', (req, res)=> {
-    all.find({category:`${req.params.categoryType}`})
-    .toArray((err, documents)=> {
-      res.send(documents)
-    })
-  })
-
-  app.get('/seller/:brandName', (req, res)=> {
-    let brand = req.params.brandName;
-    all.find({seller:brand}).toArray((err, documents)=> {
-      res.send(documents)
-    })
-  })
-
-  app.get('/allProducts/showing/:number', (req, res)=>{
-    let number = req.params.number;
-    all.find().limit(10).skip(parseInt(number)).toArray((err, documents)=>{
-      res.send(documents)
-    })
-  })
-
 
   app.post('/add-product', (req, res)=>{
-    all.insertOne(req.body)
+    collection.insertOne(req.body)
     res.send('added')
   })
   
 
   app.delete('/delete/:id',(req, res)=>{
-    all.deleteOne({_id:ObjectID(`${req.params.id}`)})
+    collection.deleteOne({_id:ObjectID(`${req.params.id}`)})
   })
 
+  // specific category product with page system
+  // here paginatedFunction is a middleware written above
+  app.get('/items', paginatedFunction())
+
+
+  // get four items from a category
+  app.get("/category/:productType", (req, res) => {
+    collection
+      .find({ category: req.params.productType })
+      .sort({ starCount: -1 })
+      .limit(4)
+      .toArray((err, documents) => {
+        res.send(documents);
+      });
+  });
+
+  // an endpoint to show one item by its id
+  app.get("/product/:id", (req, res) => {
+    const id = req.params.id;
+    collection.find({ _id: ObjectId(`${id}`) }).toArray((err, documents) => {
+      res.send(documents[0]);
+    });
+  });
+
+  // an endpoint to show most bought items(most stars), 
+  app.get("/popular-items", (req, res) => {
+    collection
+      .find()
+      .sort({ starCount: -1 })
+      .limit(10)
+      .toArray((err, documents) => {
+        res.send(documents);
+      });
+  });
 
 });
 

@@ -4,9 +4,7 @@ const app = express();
 const cors = require('cors');
 const path = require('path')
 
-
-const { MongoClient } = require('mongodb');
-const { ObjectID } = require('mongodb');
+const { MongoClient, ObjectId} = require('mongodb');
 // const MongoClient = require('mongodb').MongoClient;
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.msj15.mongodb.net/ShoppingMall?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });

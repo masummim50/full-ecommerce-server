@@ -68,6 +68,16 @@ client.connect(err => {
     collection.insertOne(req.body)
     res.send('added')
   })
+  app.get('/allusers', (req, res)=> {
+    usercollection.find().toArray((err, documents)=> {
+      res.send(documents)
+    })
+  })
+  app.get('/user/:email', (req, res)=> {
+    usercollection.find({email: `${email}`}).toArray((err, documents)=> {
+      res.send(documents[0])
+    })
+  })
 
   app.post('/add-user', (req, res)=> {
     usercollection.insertOne(req.body)

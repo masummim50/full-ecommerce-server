@@ -74,7 +74,7 @@ client.connect(err => {
     })
   })
   app.get('/user/:email', (req, res)=> {
-    usercollection.find({email: `${email}`}).toArray((err, documents)=> {
+    usercollection.find({email: `${req.params.email}`}).toArray((err, documents)=> {
       res.send(documents[0])
     })
   })

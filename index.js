@@ -17,6 +17,7 @@ app.use(express.static(path.join(__dirname, '/public')));
 client.connect(err => {
   // const collection = client.db("ShoppingMall").collection("allProducts");
  const collection = client.db("ShoppingMall").collection("allProducts");
+ const usercollection = client.db("ShoppingMall").collection("users");
 //  Don't need this newcollection for now
 //  const newcollection = client.db('ShoppingMall').collection('newcollection');
 
@@ -66,6 +67,11 @@ client.connect(err => {
   app.post('/add-product', (req, res)=>{
     collection.insertOne(req.body)
     res.send('added')
+  })
+
+  app.post('/add-user', (req, res)=> {
+    usercollection.insertOne(req.body)
+    res.send('user updated')
   })
   
 

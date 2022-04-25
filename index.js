@@ -89,8 +89,9 @@ client.connect(err => {
     collection.deleteOne({_id:ObjectID(`${req.params.id}`)})
   })
 
-  app.delete('/deleteuser/:email', (req, res)=> {
+  app.delete('/delete-user/:email', (req, res)=> {
     usercollection.deleteOne({email: `${req.params.email}`})
+    res.send('deleted')
   })
 
   // specific category product with page system

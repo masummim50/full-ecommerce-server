@@ -89,6 +89,10 @@ client.connect(err => {
     collection.deleteOne({_id:ObjectID(`${req.params.id}`)})
   })
 
+  app.delete('/deleteuser/:email', (req, res)=> {
+    usercollection.deleteOne({email: `${req.params.email}`})
+  })
+
   // specific category product with page system
   // here paginatedFunction is a middleware written above
   app.get('/items', paginatedFunction())

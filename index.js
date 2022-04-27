@@ -94,16 +94,18 @@ client.connect(err => {
   app.patch('/update-cart/:id', (req, res)=> {
     const updateobject = {cart: req.body};
     usercollection.updateOne({_id:ObjectId(`${req.params.id}`)}, {$set: updateobject})
+    res.send("updated")
   })
   
 
   app.delete('/delete/:id',(req, res)=>{
     collection.deleteOne({_id:ObjectID(`${req.params.id}`)})
+    res.send("product deleted")
   })
 
   app.delete('/delete-user/:email', (req, res)=> {
     usercollection.deleteOne({email: `${req.params.email}`})
-    res.send('deleted')
+    res.send('user deleted')
   })
 
   // specific category product with page system

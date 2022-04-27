@@ -6,8 +6,8 @@ const path = require('path');
 
 const corsOptions ={
     origin:'*', 
-    credentials:true,            //access-control-allow-credentials:true
-    optionSuccessStatus:200
+    credentials:true,
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"]
 }
 
 const { MongoClient, ObjectId} = require('mongodb');

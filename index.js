@@ -2,7 +2,13 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 const cors = require('cors');
-const path = require('path')
+const path = require('path');
+
+const corsOptions ={
+    origin:'*', 
+    credentials:true,            //access-control-allow-credentials:true
+    optionSuccessStatus:200
+}
 
 const { MongoClient, ObjectId} = require('mongodb');
 // const MongoClient = require('mongodb').MongoClient;
@@ -10,7 +16,8 @@ const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 app.use(express.json());
-app.use(cors());
+
+app.use(cors(corsOptions));
 // below line is there so i can link the css file properly. 
 app.use(express.static(path.join(__dirname, '/public')));
 

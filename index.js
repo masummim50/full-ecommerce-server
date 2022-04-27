@@ -83,6 +83,11 @@ client.connect(err => {
     usercollection.insertOne(req.body)
     res.send('user updated')
   })
+
+  app.patch('/update-cart/:id', (req, res)=> {
+    const updateobject = {cart: req.body};
+    usercollection.updateOne({_id:ObjectId(`${req.params.id}`)}, {$set: updateobject})
+  })
   
 
   app.delete('/delete/:id',(req, res)=>{
